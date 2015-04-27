@@ -178,7 +178,7 @@ namespace FtpLibrary
         /// <returns>FtpResponse containing what has been on the socket.</returns>
         private async Task<FtpResponse> ExecuteRequest(EnumRequest request, string args = null)
         {
-            FtpRequest baseRequest = RequestFactory.Create(request, args);
+            FtpRequest baseRequest = GetBaseRequest(request, args);
             string result = await WriteOnSocket(baseRequest.Command);
             if (!result.Equals(FtpConstants.OK))
                 return new FtpResponse(FtpConstants.CODE_FAIL_WRITE_ON_SOCKET, "Fail to write on socket. " + result);
@@ -308,6 +308,26 @@ namespace FtpLibrary
             catch (Exception e)
             {
                 return new FtpResponse(Convert.ToString(e.HResult), e.ToString());
+            }
+        }
+
+        private FtpRequest GetBaseRequest(EnumRequest ftpRequest, string args = null)
+        {
+            switch (ftpRequest)
+            {
+                case EnumRequest.GetCurrentPath: return new FtpRequest(FtpConstants.COMMAND_PWD, null);
+                case EnumRequest.GetFeature: return new FtpRequest(FtpConstants.COMMAND_FEAT, null);
+                case EnumRequest.GetList: return new FtpRequest(FtpConstants.COMMAND_NLST, null);
+                case EnumRequest.GetSystem: return new FtpRequest(FtpConstants.COMMAND_SYST, null);
+                case EnumRequest.SetType: return new FtpRequest(FtpConstants.COMMAND_TYPE, args);
+                case EnumRequest.PassiveMode: return new FtpRequest(FtpConstants.COMMAND_PASV, null);
+                case EnumRequest.SetPassword: return new FtpRequest(FtpConstants.COMMAND_PASS, args);
+                case EnumRequest.SetUser: return new FtpRequest(FtpConstants.COMMAND_USER, args);
+                case EnumRequest.SetPort: return new FtpRequest(FtpConstants.COMMAND_PORT, args);
+                case EnumRequest.ChangeDirectory: return new FtpRequest(FtpConstants.COMMAND_CWD, args);
+                case EnumRequest.GetFile: return new FtpRequest(FtpConstants.COMMAND_RETR, args);
+                case EnumRequest.UploadFile: return new FtpRequest(FtpConstants.COMMAND_STOR, args);
+                default: throw new Exception(FtpConstants.MESSAGE_FAIL_CREATE_REQUEST);
             }
         }
     }

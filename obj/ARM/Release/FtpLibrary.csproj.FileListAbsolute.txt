@@ -1,0 +1,16 @@
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\bin\ARM\Release\FtpLibrary.dll
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\bin\ARM\Release\FtpLibrary.pdb
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\bin\ARM\Release\FtpLibrary.pri
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\obj\ARM\Release\FtpLibrary.dll
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\obj\ARM\Release\FtpLibrary.pdb
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\obj\ARM\Release\priconfig.xml
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\obj\ARM\Release\priconfig.xml.intermediate
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\obj\ARM\Release\layout.resfiles
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\obj\ARM\Release\layout.resfiles.intermediate
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\obj\ARM\Release\resources.resfiles
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\obj\ARM\Release\resources.resfiles.intermediate
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\obj\ARM\Release\pri.resfiles
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\obj\ARM\Release\pri.resfiles.intermediate
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\obj\ARM\Release\qualifiers.txt
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\obj\ARM\Release\qualifiers.txt.intermediate
+C:\Users\Jean\Documents\Visual Studio 2015\Projects\library\WinRTFtpLibrary\obj\ARM\Release\MultipleQualifiersPerDimensionFound.txt
