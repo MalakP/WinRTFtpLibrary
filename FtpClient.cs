@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Networking;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
@@ -153,21 +154,21 @@ namespace FtpLibrary
         /// </summary>
         /// <param name="fileName">FileName"Name of the file to download.</param>
         /// <returns>FtpResponse with code = CODE_TRANSFER_COMPLETE if success.</returns>
-        public async Task<FtpResponse> GetFile(string fileName)
+        public async Task<FtpFileResponse> GetFile(string fileName)
         {
             if (!IsAuthenticated())
-                return responseNotConnected;
+                return new FtpFileResponse(FtpConstants.CODE_FAIL_NOT_CONNECTED, null);
 
             FtpResponse response = await SetServerToPassiveMode();
             if (!response.Code.Equals(FtpConstants.CODE_PASSIVE_MODE))
-                return new FtpResponse(response.Code, FtpConstants.MESSAGE_FAIL_PASSIVE_MODE + response.Message);
+                return new FtpFileResponse(response.Code, null);
 
             response = await ExecuteRequest(EnumRequest.GetFile, fileName);
             if (response.Code.Equals(FtpConstants.CODE_TRANSFER_START) ||
                 response.Code.Equals(FtpConstants.CODE_TRANSFER_COMPLETE))
-                return await ReadSocketDataReceiver();
+                return await ReadSocketFileDataReceiver();
 
-            return new FtpResponse(response.Code, FtpConstants.MESSAGE_FAIL_TRANSFER_START + response.Message);
+            return new FtpFileResponse(response.Code, null);
         }
 
         /// <summary>
@@ -240,6 +241,44 @@ namespace FtpLibrary
             catch (Exception e)
             {
                 return new FtpResponse(Convert.ToString(e.HResult), e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Read the input stream of the data socket.
+        /// </summary>
+        /// <returns>FtpResponse containing what has been on the socket.</returns>
+        private async Task<FtpFileResponse> ReadSocketFileDataReceiver()
+        {
+            try
+            {
+                DataReader inputStream = new DataReader(socketDataReceiver.InputStream);
+                inputStream.InputStreamOptions = InputStreamOptions.Partial;
+
+
+                DataReaderLoadOperation loadOperation = inputStream.LoadAsync(2500);
+                await loadOperation;
+                if (loadOperation.Status != AsyncStatus.Completed)
+                {
+
+                    return new FtpFileResponse(loadOperation.Status.ToString(), null);
+                }
+
+                //read complete message
+                uint byteCount = inputStream.UnconsumedBufferLength;
+
+                byte[] bytes = new byte[byteCount];
+                inputStream.ReadBytes(bytes);
+
+                FtpFileResponse lResponse = new FtpFileResponse(FtpConstants.CODE_TRANSFER_COMPLETE, bytes);
+
+                //detach stream so that it won't be closed when the datareader is disposed later
+                inputStream.DetachStream();
+                return lResponse;
+            }
+            catch (Exception e)
+            {
+                return new FtpFileResponse(Convert.ToString(e.HResult), null);
             }
         }
 

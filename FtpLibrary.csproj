@@ -83,6 +83,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FtpFileResponse.cs" />
     <Compile Include="EnumRequest.cs" />
     <Compile Include="FtpClient.cs" />
     <Compile Include="FtpConstants.cs" />
